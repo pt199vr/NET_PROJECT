@@ -1,13 +1,23 @@
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+import socket
 
-# Path to the image file
-image_path = 'D:/VISUALPROJECT/NETPROJECT/imagesas.jpg'
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = (('79.17.241.26', 2000))  # Use the IP address of the VM
+client_socket.connect(server_address)
 
-# Read the image
-img = mpimg.imread(image_path, format='jpg')
+message = 'Hello, server!'
+client_socket.sendall(message.encode())
 
-# Plot the image
-plt.imshow(img)
-plt.axis('off')  # Remove axis labels
-plt.show()
+# Open the image file in binary mode
+with open('received_image.jpg', 'rb') as file:
+    image_data = file.read()
+
+# Send the image data to the client
+client_socket.sendall(image_data)
+
+print('Image sent to client\n')
+
+# Send a response back to the client
+#client_socket.sendall(b'Image send successfully!')
+
+# Close the connection
+client_socket.close()
