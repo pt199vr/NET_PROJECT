@@ -45,8 +45,6 @@ def visualize_fps(image, fps: int):
 if __name__ == "__main__":
     try:
         output_dir = '/home/univr/Desktop/images'
-        
-        
         csv_file = '/home/univr/Desktop/cropped_images_info.csv'
 
         # Check if CSV file exists
@@ -83,10 +81,7 @@ if __name__ == "__main__":
 
                 fg_mask = backSub.apply(frame)
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                #edges_50 = cv2.Canny(frame_gray, 50, 150)
-                #edges = cv2.Canny(frame_gray, 10, 70)
-                
-                #for el in fg_mask:
+            
                 print(sum(sum(fg_mask)))
                 print(cv2.countNonZero(fg_mask))
                 #hist = cv2.calcHist([fg_mask], [0], None, [256], [0,256])
@@ -96,9 +91,7 @@ if __name__ == "__main__":
                 
                 contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 if len(contours) < 15:
-                    for i, contour in enumerate(contours):
-                         #if cv2.contourArea(contour) > 20 and cv2.contourArea(contour) < 50:  # Adjust this value based on insect size
-                         #if i < 1:    
+                    for i, contour in enumerate(contours):   
                          print(i, cv2.contourArea(contour) )
                          if AREA_INSECT[0] < cv2.contourArea(contour) < AREA_INSECT[1]:  # Adjust this value based on insect size
                                 
@@ -114,7 +107,6 @@ if __name__ == "__main__":
                                 output_path = os.path.join(output_dir, f'id_{i}_{timestamp}.jpg')
                 
                                 # Save the cropped image
-                                #
                                 cv2.imwrite(output_path, cropped_image)
                                 print(f'Saved cropped image: {image_name}')
                                 
@@ -122,14 +114,15 @@ if __name__ == "__main__":
                                 
                 cv2.imshow('Frame', visualize_fps(frame, fps))
                 cv2.imshow('Foreground Mask', visualize_fps(fg_mask, fps))
+
+                #edges_50 = cv2.Canny(frame_gray, 50, 150)
+                #edges = cv2.Canny(frame_gray, 10, 70)
                 #cv2.imshow('Edges', visualize_fps(edges, fps))
                 #cv2.imshow('Edges 50', visualize_fps(edges_50, fps))
                 
                 if frame_gray_p is not None:
                     if mse(frame_gray, frame_gray_p) > MSE_THRESHOLD:
                         print('Frame {0}: Motion Detected!'.format(cnt_frame))
-                
-                
                 
                 end_time = time.time()
                 seconds = end_time - start_time
