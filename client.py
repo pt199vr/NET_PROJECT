@@ -3,19 +3,18 @@ import time
 import os
 from datetime import datetime, timedelta
 
-def is_within_active_period(start_hour=8, end_hour=19):
-    now = datetime.now()
-    start_time = now.replace(hour=start_hour, minute=0, second=0, microsecond=0)
-    end_time = now.replace(hour=end_hour, minute=0, second=0, microsecond=0)
-    return start_time <= now <= end_time
+# def is_within_active_period(start_hour=8, end_hour=19):
+#     now = datetime.now()
+#     start_time = now.replace(hour=start_hour, minute=0, second=0, microsecond=0)
+#     end_time = now.replace(hour=end_hour, minute=0, second=0, microsecond=0)
+#     return start_time <= now <= end_time
 
-def time_until_next_active_period(start_hour=8):
-    now = datetime.now()
-    next_start_time = now.replace(hour=start_hour, minute=0, second=0, microsecond=0)
-    if now > next_start_time:
-        next_start_time += timedelta(days=1)
-    return (next_start_time - now).total_seconds()
-
+# def time_until_next_active_period(start_hour=8):
+#     now = datetime.now()
+#     next_start_time = now.replace(hour=start_hour, minute=0, second=0, microsecond=0)
+#     if now > next_start_time:
+#         next_start_time += timedelta(days=1)
+#     return (next_start_time - now).total_seconds()
 
 def send_all(sock, data):
     total_sent = 0
