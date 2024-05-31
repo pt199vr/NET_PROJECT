@@ -2,10 +2,12 @@ from pyLoraRFM9x import LoRa, ModemConfig
 import time
 from PIL import Image
 import io
+import os
 
 
-def load_image():
-    with open("image1.jpg", "rb") as image_file:
+def load_image(image_name):
+    
+    with open(image_name, "rb") as image_file:
         byte_array = image_file.read()
     
     # Process the image file in chunks of 250 bytes
@@ -20,27 +22,47 @@ def load_image():
                 end = len(byte_array)
                 
         chunk = byte_array[start:end]
-        status = lora.send_to_wait(chunk, 0, retries=0) 
+        
+        status = lora.send_to_wait(chunk, 0, retries=0)
+        #while not(status):
+        #    status = lora.send_to_wait(chunk, 0, retries=0)
+        #    print("Re-send package")
+        
         # Here you can process each chunk as needed
         print(f"Processing chunk {i+1}/{num_chunks}: {chunk[:10]}...")  
         
-        time.sleep(1)
+        time.sleep(0.05)
+        
     status = lora.send_to_wait(b'@END@', 0, retries=0) 
-
+    #while not(status):
+     #    print("aiuto")
+     #   status = lora.send_to_wait(b'@END@', 0, retries=0)
+    
+    print("End sent")
+       
+flag = False
 # This is our callback function that runs when a message is received
 def on_recv(payload):
     print("From:", payload.header_from)
     print("Received:", payload.message)
     print("RSSI: {}; SNR: {}".format(payload.rssi, payload.snr))
+    
+    global flag
+    if payload.message == b'OK':
+        flag = True
+    else:
+        flag = False
 
 
 if __name__ == "__main__":
+    folder_path = '/home/univr/Desktop/images/'
     
     # Lora object will use spi port 0 and use chip select 1. GPIO pin 5 will be used for interrupts and set reset pin to 25
     # The address of this device will be set to 2
-    lora = LoRa(spi_channel=1, interrupt_pin=5, my_address=1, spi_port=0, reset_pin = 25, freq=434.0, tx_power=14, modem_config=ModemConfig.Bw125Cr45Sf128, acks=True)
+    lora = LoRa(spi_channel=1, interrupt_pin=5, my_address=5, spi_port=0, reset_pin = 25, freq=434.0, tx_power=14, modem_config=ModemConfig.Bw125Cr45Sf128, acks=True)
+    #lora.retry_timeout = 2
      
-    #lora.on_recv = on_recv
+    lora.on_recv = on_recv
     
     lora.set_mode_tx()
     
@@ -49,32 +71,35 @@ if __name__ == "__main__":
     
     #while(True):
     #time.sleep(1)
-    load_image()
-        #print(len(message))
+    #for i in range(10):
+    folder_contents = os.listdir(folder_path)
+    #print(len(folder_contents))
+    i = 0
+    while True:
+        if len(folder_contents) != 0:
+            file_name = folder_contents[i]
+            print(folder_contents)
             
-
-
-
-# import time
-# from pyLoraRFM9x import LoRa, Modulation
-
-# # Configure LoRa parameters
-# spi_bus = 0
-# cs_pin = 0
-# reset_pin = 25
-# frequency = 915.0  # Frequency in MHz (adjust according to your module)
-
-# # Initialize LoRa module
-# lora = LoRa(spi_bus, cs_pin, reset_pin, frequency)
-# lora.set_modulation(Modulation.LORA)
-# lora.set_tx_power(20)  # Set transmission power
-
-# # Send a test message
-# message = "Hello, LoRa!"
-# print(f"Sending message: {message}")
-# lora.send(message.encode())
-
-# # Wait for a bit to ensure the message is sent
-# time.sleep(2)
-
-# print("Message sent successfully!")
+            byte = ('@NAME@'+file_name).encode()
+            print(byte)
+            status = lora.send_to_wait(byte, 0, retries=0) 
+            #while not(status):
+            #    status = lora.send_to_wait(byte, 0, retries=0)
+            
+            print(file_name)
+            
+            file_path = '/home/univr/Desktop/images/' + file_name
+            load_image(file_path)
+            lora.set_mode_rx()
+            
+            while True:
+                print(".")
+                time.sleep(1)
+                if flag:
+                    i = i+1
+                    break
+                    
+            flag = False
+            lora.set_mode_tx()
+            #print(len(message))
+            

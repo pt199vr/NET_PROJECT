@@ -5,30 +5,52 @@ import io
 
 current_image = b''
 received = 0
+file_name = ""
 
-# This is our callback function that runs when a message is received
+
+def is_image_corrupted(image_path):
+    try:
+        with Image.open(image_path) as img:
+            img.verify()  # Verify if it is, in fact, an image
+        return False
+    except (IOError, SyntaxError) as e:
+        print(f"Image is corrupted: {e}")
+        return True
+        
 def on_recv(payload):
     global current_image
     global received
+    global file_name
+    lora.set_mode_rx()
     
-    #print("From:", payload.header_from)
-    #print("Received:", payload.message)
-    print("RSSI: {}; SNR: {}".format(payload.rssi, payload.snr))
-    
+    #print("RSSI: {}; SNR: {}".format(payload.rssi, payload.snr))
+    #print(payload.message)
+            
     if(payload.message == b'@END@'):
-        with open("jhgf.jpg", "wb") as i:
+        lora.set_mode_tx()
+        with open(file_name, "wb") as i:
             i.write(current_image)
-            print("Image saved lmaooo, " + str(received) + "packets.")
-    elif(payload.message == "@START@"):
+            print("Image saved, " + str(received) + "packets.")
+        received = 0
         current_image = b''
+        #lora.send_ack(1, header_id = payload.header_id)
+        
+        if not(is_image_corrupted(file_name)):
+            print("Success")
+            lora.send_to_wait(b'OK', 5, retries = 0)
+        else:
+            print(file_name + " img corrupted")
+            lora.send_to_wait(b'NO', 5, retries = 0)
+    elif(payload.message.startswith(b'@NAME')):
+        file_name = payload.message.decode("utf-8").split("@")[2]
+        print(file_name)
     else:  
         current_image += payload.message
         received += 1
-
+        
+    
 if __name__ == "__main__":
     
-    # Lora object will use spi port 0 and use chip select 1. GPIO pin 5 will be used for interrupts and set reset pin to 25
-    # The address of this device will be set to 2
     lora = LoRa(spi_channel=1, interrupt_pin=5, my_address=0, spi_port=0, reset_pin = 25, freq=434.0, tx_power=14, modem_config=ModemConfig.Bw125Cr45Sf128, acks=True)
      
     lora.on_recv = on_recv
@@ -39,36 +61,3 @@ if __name__ == "__main__":
         time.sleep(1)
         print(".")
         
-# Send a message to a recipient device with address 10
-# Retry sending the message twice if we don't get an  acknowledgment from the recipient
-#message = "Hello there!"
-#status = lora.send_to_wait(message, 10, retries=2)
-#if status is True:
-#    print("Message sent!"
-#else:
-#    print("No acknowledgment from recipient")
-
-
-# import time
-# from pyLoraRFM9x import LoRa, Modulation
-
-# # Configure LoRa parameters
-# spi_bus = 0
-# cs_pin = 0
-# reset_pin = 25
-# frequency = 915.0  # Frequency in MHz (adjust according to your module)
-
-# # Initialize LoRa module
-# lora = LoRa(spi_bus, cs_pin, reset_pin, frequency)
-# lora.set_modulation(Modulation.LORA)
-# lora.set_tx_power(20)  # Set transmission power
-
-# # Send a test message
-# message = "Hello, LoRa!"
-# print(f"Sending message: {message}")
-# lora.send(message.encode())
-
-# # Wait for a bit to ensure the message is sent
-# time.sleep(2)
-
-# print("Message sent successfully!")
