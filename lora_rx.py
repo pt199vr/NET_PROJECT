@@ -21,7 +21,7 @@ def on_recv(payload):
     global current_image
     global received
     global file_name
-    lora.set_mode_rx()
+    #lora.set_mode_rx()
     
     #print("RSSI: {}; SNR: {}".format(payload.rssi, payload.snr))
     #print(payload.message)
@@ -41,6 +41,8 @@ def on_recv(payload):
         else:
             print(file_name + " img corrupted")
             lora.send_to_wait(b'NO', 5, retries = 0)
+        lora.set_mode_rx()
+        
     elif(payload.message.startswith(b'@NAME')):
         file_name = payload.message.decode("utf-8").split("@")[2]
         print(file_name)
