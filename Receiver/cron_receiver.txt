@@ -1,2 +1,2 @@
 # crontab cron.txt
-10 16 * * * nohup /usr/bin/python3 ~/Desktop/NET_PROJECT/script.py > ~/Desktop/NET_PROJECT/script.log 2>&1 &
+10 16 * * * nohup /usr/bin/python3 ~/Desktop/NET_PROJECT/Receiver/script.py > ~/Desktop/NET_PROJECT/receiver.log 2>&1 &
