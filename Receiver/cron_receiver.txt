@@ -1,4 +1,2 @@
 # crontab cron.txt
-10 16 * * * nohup /usr/bin/python3 /home/univr/Desktop/NET_PROJECT/lora_receive.py > /home/univr/Desktop/NET_PROJECT/lora_receive.log 2>&1 &
-# DA MODIFICARE: Mettere script con lora_receive and then send
-
+10 16 * * * nohup /usr/bin/python3 ~/Desktop/NET_PROJECT/script.py > ~/Desktop/NET_PROJECT/script.log 2>&1 &
