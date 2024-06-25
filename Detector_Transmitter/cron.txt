@@ -1,5 +1,5 @@
 # crontab cron.txt
-0 10 * * * ~/Desktop/NET_PROJECT/start_script.sh
-0 16 * * * ~/Desktop/NET_PROJECT/stop_script.sh
-10 16 * * * nohup /usr/bin/python3 ~/Desktop/NET_PROJECT/lora_transmit.py > ~/Desktop/NET_PROJECT/lora_transmit.log 2>&1 &
+0 10 * * * ~/Desktop/NET_PROJECT/Detector_Transmitter/start_script.sh
+0 16 * * * ~/Desktop/NET_PROJECT/Detector_Transmitter/stop_script.sh
+10 16 * * * nohup /usr/bin/python3 ~/Desktop/NET_PROJECT/Detector_Transmitter/lora_transmit.py > ~/Desktop/NET_PROJECT/Detector_Transmitter/lora_transmit.log 2>&1 &
 
