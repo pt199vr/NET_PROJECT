@@ -2,10 +2,14 @@ from pyLoraRFM9x import LoRa, ModemConfig
 import time
 from PIL import Image
 import io
+import sys
+import signal
+import os
 
 current_image = b''
 received = 0
 file_name = ""
+images_path = "images/"
 
 
 def is_image_corrupted(image_path):
@@ -25,12 +29,27 @@ def on_recv(payload):
     
     #print("RSSI: {}; SNR: {}".format(payload.rssi, payload.snr))
     #print(payload.message)
+    
+    file_extension = os.path.splitext(file_name)[1].lower()
+   
+    print(file_extension)
+    #print(image_data)
+
             
     if(payload.message == b'@END@'):
+            
         lora.set_mode_tx()
+        file_name = images_path + file_name 
         with open(file_name, "wb") as i:
             i.write(current_image)
             print("Image saved, " + str(received) + "packets.")
+            if file_extension == '.csv':
+                lora.send_to_wait(b'OK', 5, retries = 0)
+                pid = os.getpid()
+                os.kill(pid, signal.SIGTERM)
+                
+                sys.exit(0)
+
         received = 0
         current_image = b''
         #lora.send_ack(1, header_id = payload.header_id)

@@ -24,12 +24,12 @@ def send_all(sock, data):
             raise RuntimeError('Socket connection broken')
         total_sent += sent
 
-folder_path = '/home/univr/Desktop/images/'
+folder_path = 'images/'
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = (('80.182.230.135', 2000))  # Use the IP address of the VM
 server_address = (('192.168.1.100', 2000))  # Use the IP address of the VM
-#server_address = (('157.27.145.15', 2000))  # Use the IP address of the VM
+server_address = (('157.27.138.33', 2000))  # Use the IP address of the VM
 client_socket.connect(server_address)
 
 #message = 'Hello, server!'
@@ -39,6 +39,7 @@ client_socket.connect(server_address)
 
 while True:
     folder_contents = os.listdir(folder_path)
+    folder_contents = sorted(folder_contents)
     #print(len(folder_contents))
     if len(folder_contents) != 0:
         file_name = folder_contents[0]
@@ -49,7 +50,7 @@ while True:
         # Send the file name
         client_socket.sendall(file_name.encode('utf-8'))
 
-        file_path = '/home/univr/Desktop/images/' + file_name
+        file_path = 'images/' + file_name
         # Open the image file in binary mode
         with open(file_path, 'rb') as file:
             image_data = file.read()
@@ -70,6 +71,10 @@ while True:
         if confirmation.decode('utf-8') == 'Image received successfully':
             os.remove(file_path)
             print('Server confirmed image reception. Image file delete...')
+        
+        file_extension = os.path.splitext(file_name)[1].lower()
+        if file_extension == '.csv':
+            break
         #time.sleep(1)
     
     #if not(is_within_active_period()):    
