@@ -1,6 +1,6 @@
 #!/bin/bash
-if [ -f /home/univr/Desktop/images/your_script.pid ]; then
-    PID=$(cat /home/univr/Desktop/images/your_script.pid)
+if [ -f ~/Desktop/NET_PROJECT/script.pid ]; then
+    PID=$(cat ~/Desktop/NET_PROJECT/script.pid)
     kill $PID
-    rm /home/univr/Desktop/images/your_script.pid
+    rm ~/Desktop/NET_PROJECT/script.pid
 fi
