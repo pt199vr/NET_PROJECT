@@ -63,6 +63,7 @@ try:
         else:
             # Save the received image data to a file
             fname = os.path.join('INSETTI', file_name)
+            print(file_name)
             if end_pos != -1:
                     # If delimiter is found, truncate the image data at the delimiter position
                     with open(fname, 'wb') as f:
