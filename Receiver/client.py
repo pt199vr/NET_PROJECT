@@ -27,9 +27,9 @@ def send_all(sock, data):
 folder_path = 'images/'
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_address = (('80.182.230.135', 2000))  # Use the IP address of the VM
-server_address = (('192.168.1.100', 2000))  # Use the IP address of the VM
-server_address = (('157.27.138.33', 2000))  # Use the IP address of the VM
+#server_address = (('80.182.230.135', 2000))  # Use the IP address of the VM
+#server_address = (('192.168.1.100', 2000))  # Use the IP address of the VM
+server_address = (('157.27.131.166', 2000))  # Use the IP address of the VM
 client_socket.connect(server_address)
 
 #message = 'Hello, server!'
