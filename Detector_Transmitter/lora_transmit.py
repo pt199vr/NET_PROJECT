@@ -53,12 +53,14 @@ def on_recv(payload):
         flag = True
         os.remove(file_path)
         print('Server confirmed image reception. Image file delete...')
+    elif payload.message == b'NO':
+        flag = True
     else:
         flag = False
 
 if __name__ == "__main__":
     
-    folder_path = '/home/univr/Desktop/images/'    
+    folder_path = 'images/'    
     lora = LoRa(spi_channel=1, interrupt_pin=5, my_address=5, spi_port=0, reset_pin = 25, freq=434.0, tx_power=14, modem_config=ModemConfig.Bw125Cr45Sf128, acks=True)
     #lora.retry_timeout = 2
      
@@ -66,14 +68,14 @@ if __name__ == "__main__":
     lora.set_mode_tx()
     
     while True:
-        while True:
             
-            folder_contents = os.listdir(folder_path)            
+            folder_contents_no = os.listdir(folder_path)   
+            folder_contents =sorted(folder_contents_no)         
             print(folder_contents)          
             if len(folder_contents) == 0:
                 break
                 
-            file_name = folder_contents[-1]
+            file_name = folder_contents[0]
             print(file_name)
             
             file_path = folder_path + file_name
@@ -95,4 +97,10 @@ if __name__ == "__main__":
                     
             flag = False
             lora.set_mode_tx()
-        time.sleep(60)
+            
+            file_extension = os.path.splitext(file_name)[1].lower()
+            
+            print(file_extension)
+            if file_extension == '.csv':
+                break
+        #time.sleep(60)
