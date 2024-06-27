@@ -35,7 +35,7 @@ client_socket.connect(server_address)
 #message = 'Hello, server!'
 #client_socket.sendall(message.encode())
 # Specify the file to be sent
-#file_name = '2024_05_27__11_34_00.jpg'
+#file_name = '2024_05_27__11_34_00.jpg's
 
 while True:
     folder_contents = os.listdir(folder_path)
