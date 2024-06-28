@@ -91,7 +91,7 @@ if __name__ == "__main__":
                 if MOTION_BLUR:
                     frame = cv2.GaussianBlur(frame_raw, (5, 5), 0)
                 else:
-                    frame = frame_raw
+                    frame = frame_raw.copy()
                 
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 
@@ -128,9 +128,7 @@ if __name__ == "__main__":
                                 
                                 if WRITE:
                                     # Save the cropped image
-                                    print(f'image to save: {image_name}')
-                                    print(cropped_image)
-                                    if not(cropped_image == []):
+                                    if cropped_image.size !=0:
                                         cv2.imwrite(output_path, cropped_image)
                                         print(f'Saved cropped image: {image_name}')
                                         
@@ -144,7 +142,7 @@ if __name__ == "__main__":
                 #cv2.imshow('Foreground Mask', visualize_fps(fg_mask, fps))
 
                 if SHOW:
-                    cv2.imshow('Frame', visualize_fps(np.array(frame_pil), fps))
+                    #cv2.imshow('Frame', visualize_fps(np.array(frame_pil), fps))
                     cv2.imshow('Frame', visualize_fps(frame, fps))
                     
                     if BACKGROUND:
