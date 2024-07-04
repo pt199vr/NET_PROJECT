@@ -6,8 +6,9 @@ The system is composed by 3 main devices:
     3) A pc that gets all the pictures and do the calculation on them.
 
 First of all, clone this repository:
-    git clone https://github.com/pt199vr/NET_PROJECT
-
+```bash
+git clone https://github.com/pt199vr/NET_PROJECT
+```
 #REQUIREMENTS
 In order to correctly use the code you need to install those libraries and set up the environment for each device:
 
