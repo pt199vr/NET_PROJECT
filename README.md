@@ -17,8 +17,11 @@ In order to correctly use the code you need to install those libraries and set u
         pip install Pillow
 
     Raspberry 2:
-
+        cd NET_PROJECT/Receiver
+        ./setup.sh
     Raspberry 3B:
+        cd NET_PROJECT/Detector_Transmitter
+        ./setup.sh
 
 #EXECUTION COMMAND
 
