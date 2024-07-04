@@ -41,3 +41,7 @@ In order to correctly use the code you need to install those libraries and set u
         source .env/bin/activate
         ./start_script.sh
         ./stop_script.sh
+
+#WARNING!
+Check always that the IP address sets in the PC_CODE/server.py(line 20) and in the Receiver/client.py (line30) are compatible.
+You may overwrite the IP address if the pc has a different IP respect to the previous day .

@@ -17,7 +17,7 @@ def is_image_corrupted(image_path):
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the address and port
-server_address = ('157.27.133.174', 6000)
+server_address = ('192.168.16.194', 6000)
 server_socket.bind(server_address)
 
 # Listen for incoming connections
@@ -37,7 +37,9 @@ try:
 
         # Now, receive the file name itself
         file_name = client_socket.recv(file_name_length).decode('utf-8')
-
+        if file_name == 'Bye-bye':
+            print('Client disconnected')
+            break
         file_extension = os.path.splitext(file_name)[1].lower()
         image_data = b''
         while True:
