@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #INTRODUCTION
 The projec aims to create a system that recognizes insects in the crop fields.
 The system is composed by 3 main devices:
@@ -7,7 +6,7 @@ The system is composed by 3 main devices:
     3) A pc that gets all the pictures and do the calculation on them.
 
 #REQUIREMENTS
-In order to correctly use the code you need to install those libraries on each devide:
+In order to correctly use the code you need to install those libraries and set up the environment for each devide:
 
     PC requirements:
         pip update
@@ -16,27 +15,17 @@ In order to correctly use the code you need to install those libraries on each d
         pip install opencv-python  
         pip install numpy
         pip install Pillow
-=======
-# NET_PROJECT
+
+    Raspberry 2:
+
+    Raspberry 3B:
+
+#EXECUTION COMMAND
+
+    PC:
+        cd PC_CODE/
+        #The following command is a python code that classifies and compute statistics automatically
+        python pc_code.py
+        #use the following commands to the task in steps
 
 
-#Create a virtual environment
-python3 -m venv --system-site-packages new_env
-
-#Activate the new environment
-source new_env/bin/activate
-
-#Update pip
-pip install --upgrade pip
-
-#Install mediapipe
-pip install mediapipe
-
-#Install OpenCV
-pip install opencv-python
-
-#Check if you have all the libraries available
-pip list
-
-You must see "picamera2" in the list when using "pip list"
->>>>>>> bae66fbe7ea3c6c2155454363710156aacb809be
