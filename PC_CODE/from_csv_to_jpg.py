@@ -47,17 +47,19 @@ def counter(lst, str):
     else:
         lst[str] = 1
 
-def Classify(path_to_folder, csv_path):
+def Classify(path_to_folder, csv_path, day_path):
     dict = {}
 
     image = np.ones((IMAGE_HEIGHT, IMAGE_WIDTH, 3), np.uint8) * 255
     csv_file = 'classification.csv'
 
     dest_path = 'classified/'
-    csv_file = 'classification.csv'
-    csv_file_res = 'results.csv'
+    directory_path = os.path.join(path_to_folder + '/' + 'results/')
+    os.makedirs(directory_path, exist_ok=True)
+    csv_file = directory_path + 'classification.csv'
+    csv_file_res = directory_path + 'results.csv'
     file_exists = os.path.isfile(csv_file)
-    file_exists_res = os.path.isfile('results.csv')
+    file_exists_res = os.path.isfile(csv_file_res)
     file =  open(csv_file, mode='a', newline='')
     file_res =  open(csv_file_res, mode='a', newline='')
     writer = csv.writer(file)
@@ -95,7 +97,6 @@ def Classify(path_to_folder, csv_path):
 
             object_id = int(row[1])
             if current_frame_id != object_id:
-                
                 s = []
                 tot = 0
                 for elem in class_labels:
@@ -121,28 +122,23 @@ def Classify(path_to_folder, csv_path):
                 image[y:y+h, x:x+w] = current_frame
                 counter(dict, classification)
 
-# List all entries in the INSETTI directory
-entries = os.listdir(path_to_source)
 
-for entry in entries:
+for day in os.listdir(path_to_source):
     # Construct the full path
-    full_path = os.path.join(path_to_source, entry)
-    
-    # Check if the entry is a directory
-    if os.path.isdir(full_path):
-        # List all files in the directory
-        files = os.listdir(full_path)
-        
-        # Find the .csv file
-        csv_file = next((file for file in files if file.endswith('.csv')), None)
-        
-        if csv_file:
-            # Construct the full path to the .csv file
-            csv_path = os.path.join(full_path, csv_file)
+    day_path = os.path.join(path_to_source, day)
+    for ft in os.listdir(day_path):
+        ft_path = os.path.join(day_path, ft)
+        # Check if the entry is a directory
+        if os.path.isdir(ft_path):
+            # List all files in the directory
+            files = os.listdir(ft_path)
             
-            # Call the Classify function with the directory path and .csv file path
-            Classify(full_path, csv_path)
+            # Find the .csv file
+            csv_file = next((file for file in files if file.endswith('.csv')), None)
             
-                       
-            
-            
+            if csv_file:
+                # Construct the full path to the .csv file
+                csv_path = os.path.join(ft_path, csv_file)
+                print(csv_path)
+                # Call the Classify function with the directory path and .csv file path
+                Classify(ft_path, csv_path, day_path + '/')
