@@ -11,7 +11,7 @@ file3 = 'counter.py'
 
 # Correct usage of os.devnull to suppress output
 with open(os.devnull, 'w') as devnull:
-    subprocess.run(['python', file1], stdout=devnull, stderr=devnull)
+    subprocess.run(['python', file1])
     subprocess.run(['python', file2], stdout=devnull, stderr=devnull)
     subprocess.run(['python', file3], stdout=devnull,  stderr=devnull)
 

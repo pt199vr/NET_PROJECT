@@ -44,8 +44,8 @@ def counter(lst, str):
 
 path_to_source = 'INSETTI/'
 path_to_collage = 'COLLAGE/'
-IMAGE_WIDTH = 640
-IMAGE_HEIGHT = 480
+IMAGE_WIDTH = 1024
+IMAGE_HEIGHT = 768
 
 dict = {}
 
