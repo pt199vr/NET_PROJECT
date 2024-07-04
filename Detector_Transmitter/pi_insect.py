@@ -49,10 +49,14 @@ def visualize_fps(image, fps: int):
 
 if __name__ == "__main__":
     try:
+        with open('name.txt', 'r') as f:
+            name = f.read()
+
+        print(name)
         timestamp = datetime.now().strftime('%Y_%m_%d_%H-%M-%S')  # Format to milliseconds
             
         output_dir = 'images'
-        csv_file = 'images/' + timestamp + '.csv'
+        csv_file = 'images/z' + name + '_' + timestamp + '.csv'
 
         # Check if CSV file exists
         file_exists = os.path.isfile(csv_file)
@@ -103,13 +107,6 @@ if __name__ == "__main__":
                     _, binary_image = cv2.threshold(frame_gray, 100, 255, cv2.THRESH_BINARY_INV)
                     contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 
-                #print(sum(sum(fg_mask)))
-                #print(cv2.countNonZero(fg_mask))
-                #hist = cv2.calcHist([fg_mask], [0], None, [256], [0,256])
-                #print(hist.T)
-                #print(sum(hist))
-                #print("##################################")
-                
                 if len(contours) < 1500:
                     for i, contour in enumerate(contours):   
                          #print(i, cv2.contourArea(contour) )
@@ -123,8 +120,8 @@ if __name__ == "__main__":
                                 timestamp = datetime.now().strftime('%Y_%m_%d_%H-%M-%S.%f')[:-3]  # Format to milliseconds
             
                                 cropped_image = frame_raw[y-10:y+h+10, x-10:x+w+10]
-                                image_name = f'id_{i}_{timestamp}.jpg'
-                                output_path = os.path.join(output_dir, f'id_{i}_{timestamp}.jpg')
+                                image_name = name + '_' + f'id_{i}_{timestamp}.jpg'
+                                output_path = os.path.join(output_dir, image_name)
                                 
                                 if WRITE:
                                     # Save the cropped image
