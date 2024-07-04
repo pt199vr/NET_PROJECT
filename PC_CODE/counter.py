@@ -35,6 +35,8 @@ with open('results.csv', 'r') as file:
     reader = list(csv.DictReader(file))
 
     for elem in class_labels:
+        if elem == 'none_background' or elem == 'none_bird' or elem == 'none_dirt' or elem == 'none_shadow':
+            continue
         column = [int(row[elem]) for row in reader]
         count = column[0]       
         plt.figure(figsize=(10, 6))  # Increase the figure size to make the plot larger
@@ -45,7 +47,7 @@ with open('results.csv', 'r') as file:
         plt.legend()
         plt.axis([0, len(column)-1, -1, max(column) + 5])
         plt.savefig(f'PLOTS/figure_{elem}.png')
-        plt.show()
+        plt.close()
         for i in range(1, len(column)): 
             if column[i] > column[i - 1]: 
                 count +=  column[i] - column[i - 1]
