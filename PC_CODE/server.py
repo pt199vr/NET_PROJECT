@@ -17,7 +17,7 @@ def is_image_corrupted(image_path):
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the address and port
-server_address = ('192.168.16.194', 6000)
+server_address = ('101.56.62.139', 6000)
 server_socket.bind(server_address)
 
 # Listen for incoming connections
