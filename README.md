@@ -5,10 +5,9 @@ The system is composed by 3 main devices:
     2) Raspberry 2 which gets pictures from all the raspeberries 3B distributed in the field and sends them to you local pc for classification and for calculating statistics through internet,
     3) A pc that gets all the pictures and do the calculation on them.
 
-First of all, clone this repository:
-```bash
+#First of all, clone this repository:
 git clone https://github.com/pt199vr/NET_PROJECT
-```
+
 #REQUIREMENTS
 In order to correctly use the code you need to install those libraries and set up the environment for each device:
 
@@ -26,9 +25,6 @@ In order to correctly use the code you need to install those libraries and set u
     Raspberry 3B:
         cd NET_PROJECT/Detector_Transmitter
         ./setup.sh
-
-#CLONE THE REPOSITORY
-git clone link_to_the_repository
 
 #EXECUTION COMMAND
 
