@@ -23,6 +23,9 @@ In order to correctly use the code you need to install those libraries and set u
         cd NET_PROJECT/Detector_Transmitter
         ./setup.sh
 
+#CLONE THE REPOSITORY
+git clone link_to_the_repository
+
 #EXECUTION COMMAND
 
     PC:
