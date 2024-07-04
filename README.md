@@ -17,8 +17,11 @@ In order to correctly use the code you need to install those libraries and set u
         pip install Pillow
 
     Raspberry 2:
-
+        cd NET_PROJECT/Receiver
+        ./setup.sh
     Raspberry 3B:
+        cd NET_PROJECT/Detector_Transmitter
+        ./setup.sh
 
 #EXECUTION COMMAND
 
@@ -28,4 +31,13 @@ In order to correctly use the code you need to install those libraries and set u
         python pc_code.py
         #use the following commands to the task in steps
 
-
+    Raspberry 2:
+        cd NET_PROJECT/Receiver
+        source .env/bin/activate
+        python script.py
+        
+    Raspberry 3B:
+        cd NET_PROJECT/Detector_Transmitter
+        source .env/bin/activate
+        ./start_script.sh
+        ./stop_script.sh
