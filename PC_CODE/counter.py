@@ -1,5 +1,5 @@
 import csv
-
+import matplotlib.pyplot as plt
 class_labels = [
         'ant',
         'bee',
@@ -36,7 +36,16 @@ with open('results.csv', 'r') as file:
 
     for elem in class_labels:
         column = [int(row[elem]) for row in reader]
-        count = column[0]
+        count = column[0]       
+        plt.figure(figsize=(10, 6))  # Increase the figure size to make the plot larger
+        plt.plot(range(len(column)), column, label=elem)
+        plt.xlabel('Frame')
+        plt.ylabel('Number of elements')
+        plt.title(f'{elem}')
+        plt.legend()
+        plt.axis([0, len(column)-1, -1, max(column) + 5])
+        plt.savefig(f'PLOTS/figure_{elem}.png')
+        plt.show()
         for i in range(1, len(column)): 
             if column[i] > column[i - 1]: 
                 count +=  column[i] - column[i - 1]
