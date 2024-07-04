@@ -17,7 +17,7 @@ def is_image_corrupted(image_path):
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the address and port
-server_address = ('101.56.62.139', 6000)
+server_address = ('157.27.136.184', 6000)
 server_socket.bind(server_address)
 
 # Listen for incoming connections
@@ -61,7 +61,7 @@ try:
                 csv_data = file.write(data)
             print('CSV file {} data sent to server'.format(file_name), flush=True)
             client_socket.sendall('Image received successfully'.encode())
-            break
+            
         else:
             # Save the received image data to a file
             fname = os.path.join('INSETTI', file_name)
