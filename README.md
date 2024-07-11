@@ -1,15 +1,20 @@
 # INTRODUCTION
-The project aims to create a system that recognizes insects in the crop fields.
-The system is composed by 3 main devices:
-    1) Raspberry 3B used for the insect capturing through a camera and delivers all the insects images to the raspberry 2,
-    2) Raspberry 2 which gets pictures from all the raspeberries 3B distributed in the field and sends them to you local pc for classification and for calculating statistics through internet,
-    3) A pc that gets all the pictures and do the calculation on them.
+The project aims to create a system that recognizes insects in crop fields.
 
-#First of all, clone this repository:
-git clone https://github.com/pt199vr/NET_PROJECT
+The system is composed by 3 main devices:
+
+1) Raspberry 3B used for the insect capturing through a camera and delivers all the insects images to the Raspberry 2,
+
+2) Raspberry 2 which gets pictures from all the Raspeberrie 3B distributed in the field and sends them to you local pc for classification and for calculating statistics through internet,
+
+3) A pc that gets all the pictures and do the calculation on them.
+
+First of all, clone this repository:
+
+` git clone https://github.com/pt199vr/NET_PROJECT`
 
 # REQUIREMENTS
-In order to correctly use the code you need to install those libraries and set up the environment for each device:
+In order to correctly use the code you need to install some Python libraries and set up the environment for each device:
 
     PC requirements:
         pip update
@@ -22,6 +27,7 @@ In order to correctly use the code you need to install those libraries and set u
     Raspberry 2:
         cd NET_PROJECT/Receiver
         ./setup.sh
+        
     Raspberry 3B:
         cd NET_PROJECT/Detector_Transmitter
         ./setup.sh
